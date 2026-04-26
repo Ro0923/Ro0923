@@ -106,7 +106,7 @@ def authorized():
         result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
             request.args['code'],
             scopes=Config.SCOPE,
-            redirect_uri=url_for('authorized', _external=True)
+            redirect_uri=url_for('authorized', _external=True, _scheme='https')
         )
 
         if "error" in result:
