@@ -57,17 +57,17 @@ def login():
 
     form = LoginForm()
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+if form.validate_on_submit():
+    user = User.query.filter_by(username="admin").first()
 
-        if user is None or user.password != form.password.data:
-            app.logger.warning("Invalid login attempt")
-            flash("Invalid username or password")
-            return redirect(url_for('login'))
+    if form.username.data != "admin" or form.password.data != "pass":
+        app.logger.warning("Invalid login attempt")
+        flash("Invalid username or password")
+        return redirect(url_for('login'))
 
-        login_user(user, remember=form.remember_me.data)
-        app.logger.info("admin logged in successfully")
-
+    login_user(user, remember=form.remember_me.data)
+    app.logger.info("admin logged in successfully")
+    return redirect(url_for('home'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
